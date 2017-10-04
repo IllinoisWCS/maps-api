@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!-- This tutorial is based off Visualizing Data: Mapping Earthquakes -->
+<!-- https://developers.google.com/maps/documentation/javascript/earthquakes-->
+<html>
+  <head>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          // TODO: Initialize the map with required properties.
+          // See https://developers.google.com/maps/documentation/javascript/reference#MapOptions
+        });
+
+        // Create a <script> tag and set the USGS URL as the source.
+        var script = document.createElement('script');
+
+        // This example uses a local copy of the GeoJSON stored at
+        // http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp
+        script.src = 'https://developers.google.com/maps/documentation/javascript/examples/json/earthquake_GeoJSONP.js';
+        document.getElementsByTagName('head')[0].appendChild(script);
+      }
+
+      // TODO: Return a color code based on the given magnitude.
+      function getColor(mag){
+          return "#FF0000";
+      }
+      
+      // Loop through the results array.
+      window.eqfeed_callback = function(results) {
+        for (var i = 0; i < results.features.length; i++) {
+          // TODO: Parse the JSON to get the value of
+          // coordinates, place, and magnitude.
+          var coords = /* coordinates */;
+          var place = /* place */;
+          var magnitude = /* mag */;
+          // TODO: Create a LatLng object to represent position.
+          var latLng = new google.maps.LatLng(/*lat, lon from coords*/);
+          // Place a marker for each set of coordinates.
+          var marker = new google.maps.Marker({
+            // TODO: Initialize each Marker with required properties and title.
+            // See https://developers.google.com/maps/documentation/javascript/reference#MarkerOptions
+          });
+          // Place a circle to show the magnitude.
+          var color = getColor(magnitude)
+          var circle = new google.maps.Circle({
+            strokeColor: color,
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: color,
+            fillOpacity: 0.4,
+            map: map,
+            // TODO: Set the center and radius of the circle, such that
+            // the circle is certered at the marker position and
+            // the size reflects the magnitude.
+          })
+        }
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+    </script>
+  </body>
+</html>
